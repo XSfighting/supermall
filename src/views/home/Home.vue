@@ -25,7 +25,7 @@ import GoodsList from "@/components/content/goods/GoodsList";
 
 import {
   getHomeMultidata,
-    getHomeGoods
+  getHomeGoods
 } from "@/network/home";
 
 export default {
