@@ -1,14 +1,22 @@
 <template>
 <div id="home">
   <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-  <home-swiper :banners="banners" />
-  <home-recommend-view :recommends="recommends" />
-  <FeatureView/>
   <tab-control :titles="['流行','新款','精选']"
-               class="tab-control"
-               @tabClick="tabClick"/>
-  <goods-list :goods="showGoods"/>
-
+               @tabClick="tabClick" ref="tabControl1"
+               class="tab-control" v-show="isTabFixed"/>
+  <scroll class="content" ref="scroll"
+          :probe-type="3"
+          @scroll="contentScroll"
+          :pull-up-load="true"
+          @pullingUp="loadMore">
+    <home-swiper :banners="banners" @swiperImageLoad.once="swiperImageLoad"/>
+    <home-recommend-view :recommends="recommends" />
+    <FeatureView/>
+    <tab-control :titles="['流行','新款','精选']"
+                 @tabClick="tabClick" ref="tabControl2"/>
+    <goods-list :goods="showGoods"/>
+  </scroll>
+  <back-top @click.native="backClick" v-show="isShowBackTop"/>
 </div>
 </template>
 
@@ -22,11 +30,11 @@ import FeatureView from "@/views/home/childComps/FeatureView";
 import NavBar from "@/components/common/navbar/NavBar";
 import TabControl from "@/components/content/tabControl/TabControl";
 import GoodsList from "@/components/content/goods/GoodsList";
+import Scroll from "@/components/common/scroll/Scroll";
+import backTop from "@/components/content/backtop/BackTop";
 
-import {
-  getHomeMultidata,
-  getHomeGoods
-} from "@/network/home";
+import { getHomeMultidata, getHomeGoods } from "@/network/home";
+import {debounce} from "@/components/common/utils";
 
 export default {
   name: "Home",
@@ -36,7 +44,9 @@ export default {
     FeatureView,
     NavBar,
     TabControl,
-    GoodsList
+    GoodsList,
+    Scroll,
+    backTop
   },
   data() {
     return {
@@ -47,7 +57,11 @@ export default {
         'new': {page:0,list: []},
         'sell': {page:0,list: []},
       },
-      currentType: 'pop'
+      currentType: 'pop',
+      isShowBackTop: false,
+      tabOffsetTop: 0,
+      isTabFixed: false,
+      saveY: 0
     }
   },
   computed: {
@@ -56,13 +70,20 @@ export default {
     }
   },
   created() {
-  // 1.请求多个数据
+     // 1.请求多个数据
     this.getHomeMultidata();
-    // 请求商品数据
+     // 2.请求商品数据
     this.getHomeGoods('pop')
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
-
+  },
+  mounted() {
+    // 3.图片加载完成的事件监听
+    const refresh = debounce(this.$refs.scroll.refresh,50)
+    this.$bus.$on('imageLoad',()=> {
+      refresh()
+      // console.log('dd');
+    })
   },
   methods: {
     // 事件监听相关方法
@@ -77,12 +98,31 @@ export default {
         case 2:
           this.currentType = 'sell';
       }
+      this.$refs.tabControl1.currentIndex = index
+      this.$refs.tabControl2.currentIndex = index
     },
-
+    backClick() {
+    this.$refs.scroll.scrollTo(0,0)
+    },
+    contentScroll(position) {
+      // console.log(position);
+      // if (-position.y > 1000) {
+      //   this.isShowBackTop = true
+      // } else {
+      //   this.isShowBackTop = false
+      // }
+      // 1. 判断backTop是否显示
+      this.isShowBackTop = -position.y > 1000
+      // 2. 决定tabControl是否吸顶(position: fixed)
+      this.isTabFixed = (-position.y) > this.tabOffsetTop
+    },
+    loadMore() {
+      this.getHomeGoods(this.currentType)
+    },
     //网络请求相关方法
     getHomeMultidata() {
       getHomeMultidata().then(res=> {
-        console.log(res);
+        // console.log(res);
         this.banners = res.data.banner.list
         this.recommends = res.data.recommend.list
       })
@@ -90,10 +130,16 @@ export default {
     getHomeGoods(type) {
       const page = this.goods[type].page + 1
       getHomeGoods(type,page).then(res=> {
-        console.log(res.data);
+        // console.log(res.data);
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page += 1
+        this.$refs.scroll.finishPullUp()
       })
+    },
+    swiperImageLoad() {
+      // 获取tabControl的offsetTop
+      // console.log(this.$refs.tabControl.$el.offsetTop)
+      this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
     }
 
 
@@ -103,20 +149,33 @@ export default {
 
 <style scoped>
 #home {
-  padding-top: 44px;
+  /*padding-top: 44px;*/
+  height: 100vh;
 }
 .home-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 999;
   background-color: var(--color-tint);
   color: white;
+  /*在使用浏览器原生滚动时，为了不让导航不随着浏览器滚动*/
+  /*  position: fixed;*/
+  /*  left: 0;*/
+  /*  right: 0;*/
+  /*  top: 0;*/
+  /*  z-index: 999;*/
+}
+/*.content {*/
+/*  height: calc( 100% - 49px );*/
+/*  overflow: hidden;*/
+/*}*/
+.content {
+  position: absolute;
+  top: 44px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
 }
 .tab-control {
-  position: sticky;
-  top: 44px;
-  z-index: 999;
+  position: relative;
+  z-index: 9;
 }
 </style>

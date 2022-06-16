@@ -53,9 +53,7 @@
       }, 3000)
     },
     methods: {
-		  /**
-       * 定时器操作
-       */
+		  /* 定时器操作*/
       startTimer: function () {
 		    this.playTimer = window.setInterval(() => {
 		      this.currentIndex++;
@@ -66,9 +64,7 @@
         window.clearInterval(this.playTimer);
       },
 
-      /**
-       * 滚动到正确的位置
-       */
+      /* 滚动到正确的位置 */
       scrollContent: function (currentPosition) {
         // 0.设置正在滚动
         this.scrolling = true;
@@ -104,23 +100,18 @@
         }, this.animDuration)
       },
 
-      /**
-       * 设置滚动的位置
-       */
+      /*** 设置滚动的位置*/
       setTransform: function (position) {
         this.swiperStyle.transform = `translate3d(${position}px, 0, 0)`;
         this.swiperStyle['-webkit-transform'] = `translate3d(${position}px), 0, 0`;
         this.swiperStyle['-ms-transform'] = `translate3d(${position}px), 0, 0`;
       },
 
-      /**
-       * 操作DOM, 在DOM前后添加Slide
-       */
+      /*** 操作DOM, 在DOM前后添加Slide*/
 		  handleDom: function () {
         // 1.获取要操作的元素
         let swiperEl = document.querySelector('.swiper');
         let slidesEls = swiperEl.getElementsByClassName('slide');
-
         // 2.保存个数
         this.slideCount = slidesEls.length;
 
@@ -138,9 +129,7 @@
         this.setTransform(-this.totalWidth);
       },
 
-      /**
-       * 拖动事件的处理
-       */
+      /*** 拖动事件的处理*/
       touchStart: function (e) {
         // 1.如果正在滚动, 不可以拖动
         if (this.scrolling) return;
@@ -183,9 +172,7 @@
         this.startTimer();
       },
 
-      /**
-       * 控制上一个, 下一个
-       */
+      /*** 控制上一个, 下一个*/
       previous: function () {
         this.changeItem(-1);
       },

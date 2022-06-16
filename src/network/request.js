@@ -17,10 +17,10 @@ export function request(config) {
 
     // 2.2.响应拦截
     instance.interceptors.response.use(res => {
-        console.log(res);
+        // console.log(res);
         return res.data // 必须将结果return出去
     }, err => {
-        console.log(err);
+        // console.log(err);
     })
 
     // 3.发送真正的网络请求
