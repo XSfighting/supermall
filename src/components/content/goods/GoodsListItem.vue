@@ -28,6 +28,7 @@ export default {
   },
   methods: {
     imageLoad() {
+         this.$bus.$emit('itemImgLoad')
 
       // if (this.$route.path.indexOf('/home')) {
       //   this.$bus.$emit('homeItemImageLoad')

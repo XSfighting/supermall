@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import actions from "@/store/actions";
 import mutations from "@/store/mutations";
+import getters from "@/store/getters";
 
 // 1. 安装插件
 Vue.use(Vuex)
@@ -12,8 +13,7 @@ const store =  new Vuex.Store({
     cartList: []
   },
   mutations,
-  getters: {
-  },
+  getters,
   actions,
   modules: {
   }
