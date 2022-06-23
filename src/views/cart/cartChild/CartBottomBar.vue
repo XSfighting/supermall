@@ -1,8 +1,8 @@
 <template>
 <div class="cart-bottom-bar">
 
-  <div class="check-content">
-    <check-button class="check-all"></check-button>
+  <div class="check-content" >
+    <check-button class="check-all" :is-checked="isSelectAll" @click.native="selectAll"></check-button>
     <span>全选</span>
   </div>
 
@@ -24,6 +24,15 @@ export default {
   components: {
     CheckButton
   },
+  methods: {
+    selectAll() {
+      if (this.isSelectAll) {
+        this.$store.commit('notSelectAll')
+      } else {
+        this.$store.commit('selectAll')
+      }
+    }
+  },
   computed: {
     ...mapGetters['cartList'],
     totalPrice() {
@@ -34,7 +43,12 @@ export default {
     },
     checkLength() {
       return this.$store.state.cartList.filter(item=> item.checked).length
+    },
+    isSelectAll() {
+      return this.$store.state.cartList.every(item => item.checked)
+
     }
+
   }
 
 }
@@ -69,7 +83,7 @@ export default {
 }
 .calculate {
   width: 80px;
-  background-color: var(--color-high-text);
+  background-color: var(--color-tint);
   text-align: center;
 
 }

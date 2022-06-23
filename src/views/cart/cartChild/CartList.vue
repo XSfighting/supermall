@@ -7,7 +7,6 @@
       :item-info="item"/>
   </scroll>
 </div>
-
 </template>
 
 <script>

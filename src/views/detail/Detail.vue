@@ -12,6 +12,7 @@
   </scroll>
   <detail-bottom-bar class="detail-bottom-bar" @addToCart="addToCart"/>
   <back-top @click.native="backClick" v-show="isShowBackTop"/>
+  <toast></toast>
 </div>
 
 </template>
@@ -24,10 +25,12 @@ import DetailShopInfo from "@/views/detail/childComps/DetailShopInfo";
 import DetailGoodsInfo from "@/views/detail/childComps/DetailGoodsInfo";
 import DetailParamsInfo from "@/views/detail/childComps/DetailParamsInfo";
 import DetailCommentInfo from "@/views/detail/childComps/DetailCommentInfo";
-import Scroll from "@/components/common/scroll/Scroll";
-import GoodsList from "@/components/content/goods/GoodsList";
 import DetailBottomBar from "@/views/detail/childComps/DetailBottomBar";
 import BackTop from "@/components/content/backtop/BackTop";
+
+import Scroll from "@/components/common/scroll/Scroll";
+import GoodsList from "@/components/content/goods/GoodsList";
+import Toast from "@/components/common/toast/Toast";
 
 import {getDetail, getRecommend, GoodsInfo,Shop, GoodsParams} from "@/network/detail";
 import {itemListenerMixin} from "@/components/common/mixin";
@@ -47,6 +50,7 @@ export default {
     GoodsList,
     DetailBottomBar,
     BackTop,
+    Toast,
     Scroll
   },
   mixins: [itemListenerMixin],
@@ -68,7 +72,7 @@ export default {
       themeTopY: [],
       getThemeTopY: null,
       currentIndex: 0,
-      isShowBackTop: false
+      isShowBackTop: false,
     }
   },
   created() {
@@ -165,7 +169,9 @@ export default {
       product.iid = this.iid
 
       // 将商品加入到购物车
-      this.$store.dispatch('addCart', product)
+      this.$store.dispatch('addCart', product).then(res=> {
+       this.$toast.show(res)
+      })
     }
   }
 }

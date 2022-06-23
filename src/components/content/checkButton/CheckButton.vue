@@ -22,6 +22,6 @@ export default {
   border: 2px solid #aaa;
 }
 .check {
-  background-color: var(--color-high-text);
+  background-color: var(--color-tint);
 }
 </style>

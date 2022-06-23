@@ -16,7 +16,6 @@
       <div class="item-count">x{{itemInfo.count}}</div>
     </div>
   </div>
-
 </div>
 </template>
 
