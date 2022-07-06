@@ -4,7 +4,6 @@
     <a :href="item.link">
       <img :src="item.image" alt="">
       <div>{{item.title}}</div>
-
     </a>
   </div>
   </div>

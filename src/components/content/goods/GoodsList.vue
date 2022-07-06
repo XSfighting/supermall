@@ -25,9 +25,9 @@ export default {
 <style scoped>
 .goods {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-wrap: wrap;
-  padding: 6px;
+  /*padding: 6px;*/
 }
 
 </style>
