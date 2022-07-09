@@ -42,18 +42,10 @@ export default {
   data() {
     return {
       categories: [],
-      currentIndex: -1,
+      currentIndex: 0,
       categoryData: [],
       categoriesProduct: [],
       currentType: 'pop'
-    }
-  },
-  computed: {
-    showCategoryDetail() {
-      if (this.currentIndex === -1) return []
-      // console.log(this.currentType)
-      // console.log(this.categoryData[this.currentIndex].categoryDetail[this.currentType])
-      return this.categoryData[this.currentIndex].categoryDetail[this.currentType]
     }
   },
   created() {
@@ -71,7 +63,6 @@ export default {
         // console.log(res.
         // data.category);
         this.categories = res.data.category.list
-        console.log(this.categories);
 
         // 2.初始化每个类别的子数据
         for (let i = 0; i < this.categories.length; i++) {
@@ -95,9 +86,8 @@ export default {
         this.categoryData[index].subcategories = res.data
         this.categoryData = {...this.categoryData}
         this._getCategoryDetail('pop')
-        this._getCategoryDetail('sell')
         this._getCategoryDetail('new')
-        console.log(this.categoriesProduct);
+        this._getCategoryDetail('sell')
         console.log(this.categoryData[index]);
       })
     },
@@ -121,14 +111,22 @@ export default {
           this.currentType = 'pop'
           break
         case 1:
-          this.currentType = 'sell'
+          this.currentType = 'new'
           break
         case 2:
-          this.currentType = 'new'
+          this.currentType = 'sell'
           break
       }
     }
-  }
+  },
+  computed: {
+    showCategoryDetail() {
+      if (this.currentIndex === -1) return []
+      console.log(this.currentType)
+      // console.log(this.categoryData[this.currentIndex].categoryDetail[this.currentType])
+      return this.categoryData[this.currentIndex].categoryDetail[this.currentType]
+    }
+  },
 }
 </script>
 
