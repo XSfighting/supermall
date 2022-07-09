@@ -39,10 +39,11 @@ export default {
 
 <style scoped>
 #tab-menu {
-  height: 100%;
+  height: 100vh;
   width: 20%;
   background-color: #f6f6f6;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .menu-list-item {
