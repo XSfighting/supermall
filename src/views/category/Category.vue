@@ -54,7 +54,7 @@ export default {
 
   },
   mounted() {
-    this._getSubcategory(0);
+
   },
   methods: {
     // 获取分类数据
@@ -75,6 +75,7 @@ export default {
             }
           }
         }
+        this._getSubcategory(0);
       })
     },
     // 获取分类子数据
