@@ -54,7 +54,7 @@ export default {
 
   },
   mounted() {
-    this._getSubcategory(0);
+
   },
   methods: {
     // 获取分类数据
@@ -75,6 +75,8 @@ export default {
             }
           }
         }
+        // 请求默认显示的分类子数据
+        this._getSubcategory(0);
       })
     },
     // 获取分类子数据
@@ -122,7 +124,6 @@ export default {
   computed: {
     showCategoryDetail() {
       if (this.currentIndex === -1) return []
-      console.log(this.currentType)
       // console.log(this.categoryData[this.currentIndex].categoryDetail[this.currentType])
       return this.categoryData[this.currentIndex].categoryDetail[this.currentType]
     }
