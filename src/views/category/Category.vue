@@ -152,9 +152,8 @@ export default {
 }
 
 .scroll-content {
-  overflow: hidden;
   flex: 1;
-  height: calc( 100% - 44px );
-
+  height: 100vh;
+  overflow: hidden;
 }
 </style>
