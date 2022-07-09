@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
 <div class="goods-item" @click="itemClick">
   <img :src="showImage" alt="" @load="imageLoad">
   <div class="goods-info">
@@ -6,8 +7,16 @@
     <span class="price">{{goodsItem.price}}</span>
     <span class="collect">{{goodsItem.cfav}}</span>
 
+=======
+  <div class="goods-item" @click="itemClick">
+    <img :src="showImage" alt="" @load="imageLoad">
+    <div class="goods-info">
+      <p class="title">{{ goodsItem.title }}</p>
+      <span class="price">{{ goodsItem.price }}</span>
+      <span class="collect">{{ goodsItem.cfav }}</span>
+    </div>
+>>>>>>> category
   </div>
-</div>
 </template>
 
 <script>
@@ -23,12 +32,20 @@ export default {
   },
   computed: {
     showImage() {
+<<<<<<< HEAD
      return this.goodsItem.image ||  this.goodsItem.show.img
+=======
+      return this.goodsItem.image || this.goodsItem.img || this.goodsItem.show.img
+>>>>>>> category
     }
   },
   methods: {
     imageLoad() {
+<<<<<<< HEAD
          this.$bus.$emit('itemImgLoad')
+=======
+      this.$bus.$emit('itemImgLoad')
+>>>>>>> category
 
       // if (this.$route.path.indexOf('/home')) {
       //   this.$bus.$emit('homeItemImageLoad')
@@ -56,6 +73,7 @@ export default {
   height: 100%;
   border-radius: 5px;
 }
+
 .goods-info {
   font-size: 12px;
   position: absolute;
@@ -65,19 +83,23 @@ export default {
   overflow: hidden;
   text-align: center;
 }
+
 .goods-info p {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-bottom: 3px;
 }
+
 .goods-info .price {
   color: var(--color-high-text);
   margin-right: 20px;
 }
+
 .goods-info .collect {
   position: relative;
 }
+
 .goods-info .collect::before {
   content: '';
   position: absolute;

@@ -175,10 +175,14 @@ export default {
     }
   }
 }
+<<<<<<< HEAD
 </script> // 将商品加入到购物车
 this.$store.dispatch('addCart', product).then(res=> {
 this.$toast.show(res)
 })
+=======
+</script>
+>>>>>>> category
 
 <style scoped>
 #detail {
