@@ -6,9 +6,6 @@
       </div>
     </nav-bar>
 
-    <div>
-      <user-info></user-info>
-    </div>
     <!--2.没有单独封装: 不同的地方太多, 需要传过多的参数-->
     <div class="account">
       <div class="account-item">
@@ -31,18 +28,12 @@
       </div>
     </div>
 
-
-    <list-view :list-data="orderList" class="order-list"></list-view>
-    <list-view :list-data="serviceList" class="service-list"></list-view>
-    <list-view :list-data="moreList" class="more-list"></list-view>
   </div>
 
 </template>
 
 <script>
-import NavBar from 'components/common/navbar/NavBar';
-import UserInfo from './childComps/UserInfo';
-import ListView from './childComps/ListView';
+import NavBar from "@/components/common/navbar/NavBar";
 
 export default {
   name: 'Profile',
