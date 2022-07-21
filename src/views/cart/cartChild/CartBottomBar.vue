@@ -46,7 +46,6 @@ export default {
     },
     isSelectAll() {
       return this.$store.state.cartList.every(item => item.checked)
-
     }
 
   }

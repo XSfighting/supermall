@@ -2,7 +2,7 @@ export default {
     addCart(context,payload) {
         return new Promise((resolve,reject)=> {
             // 1.查找之前数组中是否有该商品
-            let oldProduct = context.state.cartList.find(item => item.iid === payload.iid)
+            let oldProduct = context.state.cartList.find(item => item.iid === payload.iid)  // 返回布尔值
             // 2.判断oldProduct
             if(oldProduct) {
                 // product.count += 1

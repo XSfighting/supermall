@@ -1,11 +1,12 @@
 <template>
-<div class="goods">
-<goods-list-item v-for="item in goods" :goods-item="item"/>
-</div>
+  <div class="goods">
+    <goods-list-item v-for="item in goods" :goods-item="item"/>
+  </div>
 </template>
 
 <script>
 import GoodsListItem from "@/components/content/goods/GoodsListItem";
+
 export default {
   name: "GoodsList",
   components: {

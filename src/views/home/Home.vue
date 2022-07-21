@@ -151,7 +151,6 @@ export default {
       this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
     }
 
-
   }
 }
 </script>
